@@ -1,0 +1,6 @@
+services:
+  sandbox.event_subscriber:
+    class: Drupal\sandbox\EventSubscriber\SandboxEventSubscriber
+    arguments: ['@config.factory', '@current_user', '@module_handler']
+    tags:
+      - { name: event_subscriber }

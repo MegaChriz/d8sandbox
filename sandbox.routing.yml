@@ -1,0 +1,60 @@
+# Page callbacks.
+sandbox.page:
+  path: '/sandbox'
+  defaults:
+    _content: '\Drupal\sandbox\Controller\sandboxController::page'
+    title: 'Sandbox'
+  requirements:
+    _permission: 'administer site configuration'
+
+# Company entity.
+sandbox_company.add:
+  path: '/sandbox/company/add'
+  defaults:
+    _content: '\Drupal\sandbox\Controller\CompanyController::add'
+  requirements:
+    _permission: 'create status updates'
+
+sandbox_company.edit:
+  path: '/sandbox/company/{sandbox_company}/edit'
+  defaults:
+    _entity_form: 'sandbox_company.default'
+  requirements:
+    _permission: 'administer status updates'
+
+sandbox_company.delete:
+  path: '/sandbox/company/{sandbox_company}/delete'
+  defaults:
+    _entity_form: 'sandbox_company.delete'
+  requirements:
+    _permission: 'administer status updates'
+
+# Sand entity.
+sandbox.sand_list:
+  path: '/admin/config/system/sand'
+  defaults:
+    _entity_list: 'sand'
+    _title: 'Sand Particles Configuration'
+  requirements:
+    _permission: 'administer site configuration'
+sandbox.sand_add:
+  path: '/admin/config/system/sand/add'
+  defaults:
+    _entity_form: sand.add
+    _title: 'Add sand particle'
+  requirements:
+    _permission: 'administer site configuration'
+sandbox.sand_edit:
+  path: '/admin/config/system/sand/{sand}'
+  defaults:
+    _entity_form: sand.edit
+    _title: 'Edit sand particle'
+  requirements:
+    _permission: 'administer site configuration'
+sandbox.sand_delete:
+  path: '/admin/config/system/sand/{sand}/delete'
+  defaults:
+    _entity_form: sand.delete
+    _title: 'Delete sand particle'
+  requirements:
+    _permission: 'administer site configuration'

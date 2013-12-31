@@ -1,0 +1,4 @@
+name: Sandbox
+type: module
+description: 'A module to play with.'
+core: 8.x

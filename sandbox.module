@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Code for the sandbox module.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function sandbox_menu() {
+  $items = array();
+  $items['admin/config/system/sand'] = array(
+    'title' => 'Sand particles',
+    'description' => 'Configure sand particles',
+    'route_name' => 'sandbox.sand_list',
+  );
+  return $items;
+}
