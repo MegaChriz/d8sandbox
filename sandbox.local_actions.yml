@@ -1,5 +1,5 @@
-sandbox.sand_add:
-  route_name: sandbox.sand_add
+sandbox.sand_add2:
+  route_name: sandbox.sand_add2
   title: 'Add Sand Particle'
   appears_on:
-    - sandbox.sand_list
+    - sandbox.sand_list2

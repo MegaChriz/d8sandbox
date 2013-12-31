@@ -17,3 +17,25 @@ function sandbox_menu() {
   );
   return $items;
 }
+
+/**
+ * Implements hook_permission().
+ */
+function sandbox_permission() {
+  $permissions = array();
+
+  // For each protection rule, create a permission to bypass the rule.
+  foreach (entity_load_multiple('sand') as $rule) {
+    $vars = array(
+      '%label' => $rule->label(),
+    );
+    $permissions += array(
+      'userprotect.' . $rule->id() . '.bypass' => array(
+        'title' => t('Bypass user protection for %label', $vars),
+        'description' => t('The user protection rule %label is ignored for users with this permission.', $vars),
+      ),
+    );
+  }
+
+  return $permissions;
+}

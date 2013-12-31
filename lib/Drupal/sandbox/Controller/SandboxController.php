@@ -41,7 +41,6 @@ class sandboxController extends ControllerBase implements ContainerInjectionInte
     }
 
     $output = entity_view_multiple($entities, 'default');
-    
-    return 'hello';
+    return $output;
   }
 }

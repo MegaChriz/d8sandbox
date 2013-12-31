@@ -9,14 +9,62 @@ namespace Drupal\sandbox\Form;
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityFormController;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\taxonomy\VocabularyInterface;
 
 class SandFormController extends EntityFormController {
+  /**
+   * The config factory.
+   *
+   * @var \Drupal\Core\Entity\EntityManagerInterface
+   */
+  protected $entityManager;
+
+  /**
+   * Constructs a new TermFormController.
+   *
+   * @param \Drupal\Core\Entity\EntityManagerInterface $entity_manager
+   *   The entity manager.
+   */
+  public function __construct(EntityManagerInterface $entity_manager) {
+    $this->entityManager = $entity_manager;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('entity.manager')
+    );
+  }
+
+  /**
+   * Returns a rendered edit form to create a new term associated to the given vocabulary.
+   *
+   * @param \Drupal\taxonomy\VocabularyInterface $taxonomy_vocabulary
+   *   The vocabulary this term will be added to.
+   *
+   * @return array
+   *   The taxonomy term add form.
+   */
+  public function addForm(VocabularyInterface $taxonomy_vocabulary) {
+    $sand = $this->entityManager->getStorageController('sand')->create(array('vid' => $taxonomy_vocabulary->id()));
+    return $this->entityManager->getForm($sand);
+  }
+
   /**
    * {@inheritdoc}
    */
   public function form(array $form, array &$form_state) {
-    $form = parent::form($form, $form_state);
     $sand = $this->entity;
+    $bundle = $sand->bundle();
+    $vocab_storage = $this->entityManager->getStorageController('taxonomy_vocabulary');
+    $vocabulary = $vocab_storage->load($sand->bundle());
+
+    $form_state['taxonomy']['vocabulary'] = $vocabulary;
+
+    $form = parent::form($form, $form_state);
     $form['label'] = array(
       '#type' => 'textfield',
       '#title' => $this->t('Label'),

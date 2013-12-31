@@ -9,6 +9,7 @@ namespace Drupal\sandbox\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
 use Drupal\sandbox\SandInterface;
+use Drupal\Core\Field\FieldDefinition;
 
 /**
  * Defines the Sand particle entity.
@@ -19,8 +20,9 @@ use Drupal\sandbox\SandInterface;
  *   controllers = {
  *     "storage" = "Drupal\Core\Config\Entity\ConfigStorageController",
  *     "list" = "Drupal\sandbox\Controller\SandListController",
- *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
+ *     "view_builder" = "Drupal\sandbox\SandViewBuilder",
  *     "form" = {
+ *       "default" = "Drupal\sandbox\Form\SandFormController",
  *       "add" = "Drupal\sandbox\Form\SandFormController",
  *       "edit" = "Drupal\sandbox\Form\SandFormController",
  *       "delete" = "Drupal\sandbox\Form\SandDeleteForm"
@@ -31,8 +33,13 @@ use Drupal\sandbox\SandInterface;
  *   entity_keys = {
  *     "id" = "id",
  *     "label" = "label",
- *     "uuid" = "uuid"
+ *     "uuid" = "uuid",
+ *     "bundle" = "vid"
  *   },
+ *   bundle_keys = {
+ *     "bundle" = "vid"
+ *   },
+ *   bundle_entity_type = "taxonomy_vocabulary",
  *   links = {
  *     "edit-form" = "sandbox.sand_edit"
  *   }
@@ -61,6 +68,11 @@ class Sand extends ConfigEntityBase implements SandInterface {
   public $label;
 
   /**
+   * The taxonomy vocabulary this sand particle belongs to.
+   */
+  public $vid;
+
+  /**
    * The color of the sand particle.
    */
   public $color;
@@ -86,5 +98,12 @@ class Sand extends ConfigEntityBase implements SandInterface {
       ->setLabel(t('Color'));
 
     return $fields;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function bundle() {
+    return $this->vid;
   }
 }

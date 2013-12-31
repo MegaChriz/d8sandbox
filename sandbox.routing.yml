@@ -38,12 +38,19 @@ sandbox.sand_list:
   requirements:
     _permission: 'administer site configuration'
 sandbox.sand_add:
-  path: '/admin/config/system/sand/add'
+  path: '/admin/config/system/sand/{taxonomy_vocabulary}/add'
   defaults:
-    _entity_form: sand.add
+    _content: '\Drupal\sandbox\Form\SandFormController::addForm'
     _title: 'Add sand particle'
   requirements:
     _permission: 'administer site configuration'
+#sandbox.sand_add_old:
+#  path: '/admin/config/system/sand/{taxonomy_vocabulary}/add'
+#  defaults:
+#    _entity_form: sand.add
+#    _title: 'Add sand particle'
+#  requirements:
+#    _permission: 'administer site configuration'
 sandbox.sand_edit:
   path: '/admin/config/system/sand/{sand}'
   defaults:
