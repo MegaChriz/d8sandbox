@@ -26,6 +26,18 @@ class Sandblock extends BlockBase {
     $query = \Drupal::entityQuery('sand');
     $query->condition('color', $this->configuration['color'], $this->configuration['color_op']);
     $result = $query->execute();
+    $entities = entity_load_multiple('sand', $result);
+
+    // Create a list of sand particles.
+    $items = array();
+    foreach ($entities as $key => $entity) {
+      $items[$key] = '<span style="color: ' . $entity->color . '">' . $entity->label() . '</span>';
+      if ($entity->access('edit')) {
+        $uri = $entity->uri('edit-form');
+        $items[$key] = l($items[$key], $uri['path'], array('html' => TRUE));
+      }
+    }
+
     $ops = $this->getOperators();
     $vars = array(
       '@color_op' => strtolower($ops[$this->configuration['color_op']]),
@@ -36,7 +48,7 @@ class Sandblock extends BlockBase {
     );
     $render['list'] = array(
       '#theme' => 'item_list',
-      '#items' => $result,
+      '#items' => $items,
     );
     return $render;
   }
