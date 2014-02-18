@@ -3,6 +3,10 @@
 /**
  * @file
  * Contains TryTest class.
+ *
+ * To execute this test on command line:
+ * cd core
+ * ./vendor/bin/phpunit --group sandbox
  */
 
 namespace Drupal\sandbox\Tests;
@@ -19,7 +23,7 @@ class TryTest extends \PHPUnit_Framework_TestCase {
   public function testOne() {
     $this->assertEquals(1, 1);
     // Failing assert.
-    $this->assertEquals(1, 2);
+    //$this->assertEquals(1, 2);
   }
 
   /**
@@ -53,5 +57,34 @@ class TryTest extends \PHPUnit_Framework_TestCase {
       array(5, 2, 3),
       array(50, 20, 30),
     );
+  }
+
+  /**
+   * This is an example of expecting a PHP warning.
+   *
+   * @expectedException PHPUnit_Framework_Error_Warning
+   */
+  public function testWarning() {
+    include 'file.php';
+  }
+
+  /**
+   * This is an example of expecting a PHP notice.
+   *
+   * @expectedException PHPUnit_Framework_Error_Notice
+   */
+  public function testNotice() {
+    $test .= 'test';
+  }
+
+  /**
+   * According to the PHPUnit documentation, testing that the generic
+   * Exception is expected is "not permitted", though on 3.7.21 it
+   * still passes.
+   *
+   * @expectedException Exception
+   */
+  public function testGenericException() {
+    throw new \Exception();
   }
 }
