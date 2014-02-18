@@ -4,3 +4,6 @@ services:
     arguments: ['@config.factory', '@current_user', '@module_handler']
     tags:
       - { name: event_subscriber }
+  plugin.manager.calculator:
+    class: Drupal\sandbox\CalculatorManager
+    parent: default_plugin_manager
