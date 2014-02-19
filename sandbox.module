@@ -19,6 +19,19 @@ function sandbox_menu() {
 }
 
 /**
+ * Implements hook_menu_link_defaults().
+ */
+function sandbox_menu_link_defaults() {
+  $links['sandbox.sand.list'] = array(
+    'link_title' => 'Sand particles',
+    'description' => 'Configure sand particles.',
+    'route_name' => 'sandbox.sand_list',
+    'parent' => 'system.admin.config.system',
+  );
+  return $links;
+}
+
+/**
  * Implements hook_permission().
  */
 function sandbox_permission() {
